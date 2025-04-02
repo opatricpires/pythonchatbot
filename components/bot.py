@@ -1,6 +1,6 @@
 from time import sleep
 
-def bot(prompt, cliente, modelo):
+def bot(prompt, cliente, modelo, contexto):
     maximo_tentativas = 1
     repeticao = 0
 
@@ -9,6 +9,11 @@ def bot(prompt, cliente, modelo):
             prompt_do_sistema = f"""
             Você é um chatbot de atendimento a clientes de um e-commerce. 
             Você não deve responder perguntas que não sejam dados do e-commerce informado!
+            
+            
+            Você deve gerar respostas utilizando o contexto abaixo:
+            # Contexto
+            {contexto}
             """
             response = cliente.chat.completions.create(
                 messages=[
