@@ -3,6 +3,8 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
+from components.bot import bot
+
 load_dotenv()
 
 cliente = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -14,7 +16,9 @@ app.secret_key = 'alura'
 @app.route('/chat', methods=["POST"])
 def chat():
     prompt = request.json["msg"]
-    resposta = bot(prompt)
+    resposta = bot(prompt, cliente, modelo)
+    texto_resposta = resposta.choices[0].message.content
+    return texto_resposta
 
 @app.route("/")
 def home():
